@@ -1,0 +1,5 @@
+access_token role admin = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTmdvIFR1YW4gTWluaCIsImlkIjoiNjFkNTRhNGY2Yjg4MjU4ZjJlMGNmYjI2In0.KNvGxAB8_OGcZd6nb7qSTvMKhiFr-uzE7KJ9xNOq9p8
+
+access_token role user = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZDU1M2VjNmI4ODI1OGYyZTBjZmIyNyIsIm5hbWUiOiJKb2huIERvZSJ9.7UOoX8v_K2OJV4HufAiCdxTSkDSe-NsbYsUQB3RkAR8
+
+=> beare + access_token
