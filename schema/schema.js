@@ -11,6 +11,12 @@ const typeDefs = gql`
 		author: Author
 	}
 
+	type Login {
+		accessToken: String
+		refreshToken: String
+		expire: Int
+	}
+
 	type Author {
 		id: ID!
 		name: String
@@ -28,6 +34,8 @@ const typeDefs = gql`
 	type Mutation {
 		createAuthor(name: String, age: Int): Author,
 		createBook(name: String, genre: String, authorId: ID): Book
+		login(email: String, password: String): Login
+		refreshToken(refreshToken: String): Login
 	}
 `
 
