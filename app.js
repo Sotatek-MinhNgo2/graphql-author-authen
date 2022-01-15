@@ -33,9 +33,21 @@ const isPrivated = async (resolve, parent, args, context, info) => {
     return resolve();
 }
 
+const isExpire = async (resolve, parent, args, context, info) => {
+    const { expire } = context;
+    console.log("expire=====", expire);
+    console.log("now", Math.floor(Date.now()/1000));
+    console.log("time=====", Math.floor(Date.now()/1000) - Number(expire));
+    if (Math.floor(Date.now()/1000) > Number(expire)) {
+        throw new Error(`Token is expired. Please login again.`)
+    }
+    return resolve();
+}
+
 const permissions = {
     Query: {
-        authors: isPrivated,
+        authors: isExpire,
+        books: isExpire
     }
 }
 
@@ -44,13 +56,17 @@ const schema = makeExecutableSchema({ typeDefs, resolvers })
 const protectedSchema = applyMiddleware(schema, permissions)
 
 const server = new ApolloServer({
+    cors: false,
     // typeDefs,
     // resolvers,
     context: async ({req, res}) => {
-        const token = req.headers?.authorization?.split(" ")[1] || '';
-        const { id: userId} = verify(token, private_key);
-        const user = await mongoDataMethods.getUserById(userId);
-        return {mongoDataMethods, user}
+        console.log("header authorization====", req.headers?.authorization);
+        const expire = req.headers?.authorization?.split(".")[1] || '';
+        const accessToken = req.headers?.authorization?.split(".")[0] || '';
+        // const { id: userId} = verify(token, private_key);
+        // const user = await mongoDataMethods.getUserById(userId);
+        // return {mongoDataMethods, user}
+        return { mongoDataMethods, expire, accessToken }
     },
     schema: protectedSchema,
     request: operation => {
